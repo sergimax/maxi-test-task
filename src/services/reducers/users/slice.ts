@@ -23,7 +23,13 @@ const usersSlice = createSlice({
             .addCase(fetchUsers.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isLoaded = true;
-                state.users = action.payload;
+
+                state.users = action.payload.map((user) => {
+                    return {
+                        zipcode: user.address.zipcode,
+                        ...user,
+                    };
+                });
             })
             .addCase(fetchUsers.rejected, (state, action) => {
                 state.isLoading = false;
