@@ -7,6 +7,7 @@ import {
     usersIsLoadingSelector,
     usersSelector,
 } from './services/reducers/users/selectors';
+import { User } from './services/reducers/users/types';
 
 function App() {
     const dispatch = useAppDispatch();
@@ -23,7 +24,20 @@ function App() {
         <>
             <h1>Hello there!</h1>
             <div>users:</div>
-            {isLoaded && <div>{users[0].name}</div>}
+            {isLoaded &&
+                users.map((user: User, index: number) => {
+                    return (
+                        <div key={index}>
+                            {user.id}
+                            {user.name[0]}
+                            {user.name}
+                            {user.username}
+                            {user.email}
+                            {user.phone}
+                            {user.address.zipcode}
+                        </div>
+                    );
+                })}
         </>
     );
 }
