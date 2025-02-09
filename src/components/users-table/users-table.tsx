@@ -1,3 +1,4 @@
+import { UsersTableRow } from '../users-table-row';
 import { UsersTableProps } from './types';
 
 export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
@@ -18,16 +19,10 @@ export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
                 <tbody>
                     {usersList.map((user, index) => {
                         return (
-                            <tr key={index}>
-                                <td>{user.id}</td>
-                                <td>
-                                    <span>{user.name[0]}</span> {user.name}
-                                </td>
-                                <td>{user.username}</td>
-                                <td>{user.email}</td>
-                                <td>{user.phone}</td>
-                                <td>{user.address.zipcode}</td>
-                            </tr>
+                            <UsersTableRow
+                                key={index}
+                                data={user}
+                            />
                         );
                     })}
                 </tbody>
