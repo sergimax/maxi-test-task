@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { USERS_STATE_NAME } from './constants';
 import { fetchUsers } from './thunks';
+import { UsersState } from './types';
 
-const initialState: any = {
+const initialState: UsersState = {
     users: [],
     isLoaded: false,
     isLoading: false,
@@ -17,13 +18,19 @@ const usersSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(fetchUsers.pending, (state, action) => {
+            .addCase(fetchUsers.pending, (state) => {
                 state.isLoading = true;
             })
             .addCase(fetchUsers.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isLoaded = true;
-                state.users = action.payload;
+
+                state.users = action.payload.map((user) => {
+                    return {
+                        zipcode: user.address.zipcode,
+                        ...user,
+                    };
+                });
             })
             .addCase(fetchUsers.rejected, (state, action) => {
                 state.isLoading = false;
