@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { USERS_STATE_NAME } from './constants';
 import { fetchUsers } from './thunks';
-import { UsersState } from './types';
+import { ListOfModifiedUsers, UsersState } from './types';
 
 const initialState: UsersState = {
     users: [],
@@ -15,6 +15,15 @@ const usersSlice = createSlice({
     initialState,
     reducers: {
         resetUsersState: () => initialState,
+        deleteUsersById: (state, action) => {
+            const { value }: { value: Array<string> } = action.payload;
+
+            const newUsersList: ListOfModifiedUsers = [...state.users].filter(
+                (user) => !value.includes(String(user.id))
+            );
+
+            state.users = newUsersList;
+        },
     },
     extraReducers(builder) {
         builder
@@ -41,5 +50,7 @@ const usersSlice = createSlice({
             });
     },
 });
+
+export const { resetUsersState, deleteUsersById } = usersSlice.actions;
 
 export const usersReducer = usersSlice.reducer;

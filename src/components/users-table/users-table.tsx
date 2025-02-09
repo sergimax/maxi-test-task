@@ -12,8 +12,12 @@ import {
     ModifiedUserKeys,
     ModifiedUser,
 } from '../../services/reducers/users/types';
+import { useAppDispatch } from '../../services/hooks';
+import { deleteUsersById } from '../../services/reducers/users/slice';
 
 export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
+    const dispatch = useAppDispatch();
+
     const [sortingParams, setSortingParams] = useState<SortingParams>({
         direction: SORTING_DIRECTION.ASC,
         key: undefined,
@@ -25,7 +29,9 @@ export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
         phone: '',
     });
 
-    const [selectedUsers, setSelectedUsers] = useState<Set<number>>(new Set());
+    const [selectedUsers, setSelectedUsers] = useState<Set<number> | null>(
+        null
+    );
 
     function applySorting(key: string): void {
         let direction: SORTING_DIRECTION = SORTING_DIRECTION.ASC;
@@ -108,8 +114,22 @@ export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
         setSelectedUsers(newSelectedUsers);
     }
 
+    function handleDeleteUsers(usersIds: Set<number>): void {
+        dispatch(deleteUsersById({ value: Array.from(usersIds.values()) }));
+        setSelectedUsers(null);
+    }
+
     return (
         <>
+            {selectedUsers && (
+                <div>
+                    Selected users IDs: {[...selectedUsers].join(', ')}
+                    <br />
+                    <button onClick={() => handleDeleteUsers(selectedUsers)}>
+                        Delete selected users
+                    </button>
+                </div>
+            )}
             <table>
                 {caption && <caption>{caption}</caption>}
                 <thead>
@@ -142,10 +162,10 @@ export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredUsers.map((user, index) => {
+                    {filteredUsers.map((user: ModifiedUser) => {
                         return (
                             <UsersTableRow
-                                key={index}
+                                key={user.id}
                                 data={user}
                                 onRowSelect={handleRowSelection}
                             />
