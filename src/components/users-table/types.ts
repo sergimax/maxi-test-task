@@ -1,8 +1,10 @@
 import { ListOfModifiedUsers } from '../../services/reducers/users/types';
+import { DataForModal } from '../../types/types';
 
 export type UsersTableProps = {
     usersList: ListOfModifiedUsers;
     caption?: string;
+    onDeleteUser: (data: DataForModal) => void;
 };
 
 export enum SORTING_DIRECTION {

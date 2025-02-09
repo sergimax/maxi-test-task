@@ -14,8 +14,13 @@ import {
 } from '../../services/reducers/users/types';
 import { useAppDispatch } from '../../services/hooks';
 import { deleteUsersById } from '../../services/reducers/users/slice';
+import { MODAL_TYPE } from '../../constants/constants';
 
-export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
+export const UsersTable = ({
+    usersList,
+    caption,
+    onDeleteUser,
+}: UsersTableProps) => {
     const dispatch = useAppDispatch();
 
     const [sortingParams, setSortingParams] = useState<SortingParams>({
@@ -115,13 +120,25 @@ export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
     }
 
     function handleDeleteUsers(usersIds: Set<number>): void {
-        dispatch(deleteUsersById({ value: Array.from(usersIds.values()) }));
-        setSelectedUsers(null);
+        onDeleteUser({
+            type: MODAL_TYPE.DELETE_USER,
+            onAccept() {
+                dispatch(
+                    deleteUsersById({ value: Array.from(usersIds.values()) })
+                );
+                setSelectedUsers(null);
+            },
+            content: (
+                <>
+                    <h1>Delete selected users?</h1>
+                </>
+            ),
+        });
     }
 
     return (
         <>
-            {selectedUsers && (
+            {selectedUsers && selectedUsers.size > 0 && (
                 <div>
                     Selected users IDs: {[...selectedUsers].join(', ')}
                     <br />
