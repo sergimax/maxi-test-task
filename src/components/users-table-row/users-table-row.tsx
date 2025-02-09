@@ -1,10 +1,23 @@
+import { BaseSyntheticEvent } from 'react';
 import { UsersTableRowProps } from './types';
 
-export const UsersTableRow = ({ data }: UsersTableRowProps) => {
+export const UsersTableRow = ({ data, onRowSelect }: UsersTableRowProps) => {
     return (
         <>
             <tr>
-                <td>{data.id}</td>
+                <td>
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="UsersTableRow"
+                            value={data.id}
+                            onChange={(event: BaseSyntheticEvent) =>
+                                onRowSelect(event)
+                            }
+                        ></input>
+                        {data.id}
+                    </label>
+                </td>
                 <td>
                     <span>{data.name[0]}</span> {data.name}
                 </td>

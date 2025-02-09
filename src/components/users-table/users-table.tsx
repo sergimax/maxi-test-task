@@ -25,6 +25,8 @@ export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
         phone: '',
     });
 
+    const [selectedUsers, setSelectedUsers] = useState<Set<number>>(new Set());
+
     function applySorting(key: string): void {
         let direction: SORTING_DIRECTION = SORTING_DIRECTION.ASC;
 
@@ -88,13 +90,22 @@ export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
     function handleInputValueChange(
         event: BaseSyntheticEvent,
         targetLabel: string
-    ) {
-        console.log(event.target.value, targetLabel);
-
+    ): void {
         setFilterParams({
             ...filterParams,
             [targetLabel]: event.target.value,
         });
+    }
+
+    function handleRowSelection(event: BaseSyntheticEvent): void {
+        const newSelectedUsers = new Set(selectedUsers);
+
+        if (event.target.checked) {
+            newSelectedUsers.add(event.target.value);
+        } else {
+            newSelectedUsers.delete(event.target.value);
+        }
+        setSelectedUsers(newSelectedUsers);
     }
 
     return (
@@ -136,6 +147,7 @@ export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
                             <UsersTableRow
                                 key={index}
                                 data={user}
+                                onRowSelect={handleRowSelection}
                             />
                         );
                     })}
