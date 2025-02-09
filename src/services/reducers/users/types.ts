@@ -34,3 +34,18 @@ export type UserAddress = {
         lng: string;
     };
 };
+
+export type ModifiedUser = User & {
+    zipcode: string;
+};
+
+export type ModifiedUserKeys = keyof ModifiedUser;
+
+export type ListOfModifiedUsers = Array<ModifiedUser>;
+
+export type UsersState = {
+    users: ListOfModifiedUsers;
+    isLoaded: boolean;
+    isLoading: boolean;
+    error?: string;
+};

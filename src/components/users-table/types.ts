@@ -1,7 +1,7 @@
-import { User } from '../../services/reducers/users/types';
+import { ListOfModifiedUsers } from '../../services/reducers/users/types';
 
 export type UsersTableProps = {
-    usersList: Array<User>;
+    usersList: ListOfModifiedUsers;
     caption?: string;
 };
 
