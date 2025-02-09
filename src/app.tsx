@@ -4,20 +4,18 @@ import { useAppDispatch, useAppSelector } from './services/hooks';
 import { fetchUsers } from './services/reducers/users/thunks';
 import {
     usersIsLoadedSelector,
-    usersIsLoadingSelector,
+    // usersIsLoadingSelector,
     usersSelector,
 } from './services/reducers/users/selectors';
-import { User } from './services/reducers/users/types';
 import { UsersTable } from './components/users-table';
 
 function App() {
     const dispatch = useAppDispatch();
     const users = useAppSelector(usersSelector);
-    const isLoading = useAppSelector(usersIsLoadingSelector);
+    // const isLoading = useAppSelector(usersIsLoadingSelector);
     const isLoaded = useAppSelector(usersIsLoadedSelector);
 
     useEffect(() => {
-        console.log('APP');
         dispatch(fetchUsers());
     }, [dispatch]);
 
