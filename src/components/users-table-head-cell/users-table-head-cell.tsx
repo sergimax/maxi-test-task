@@ -1,12 +1,6 @@
-import { SORTING_DIRECTION, SortingParams } from '../users-table/types';
+import { SORTING_DIRECTION } from '../users-table/types';
 import styles from './style.module.scss';
-
-export type UsersTableHeadCellProps = {
-    label: string;
-    onSorting?: () => void;
-    sortingParams?: SortingParams;
-    onInputChange?: () => void;
-};
+import { UsersTableHeadCellProps } from './types';
 
 export const UsersTableHeadCell = ({
     label,
@@ -30,7 +24,11 @@ export const UsersTableHeadCell = ({
                     {label}
                     {sortingTrend && <span>{sortingTrend}</span>}
                 </span>
-                {onInputChange && <input onChange={onInputChange}></input>}
+                {onInputChange && (
+                    <input
+                        onChange={(event) => onInputChange(event, label)}
+                    ></input>
+                )}
             </div>
         </th>
     );

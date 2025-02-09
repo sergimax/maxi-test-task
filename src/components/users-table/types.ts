@@ -14,3 +14,9 @@ export type SortingParams = {
     direction: SORTING_DIRECTION;
     key?: string;
 };
+
+export type FilterParams = {
+    name: string;
+    email: string;
+    phone: string;
+};

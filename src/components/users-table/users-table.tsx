@@ -1,7 +1,17 @@
-import { useMemo, useState } from 'react';
+import { BaseSyntheticEvent, useMemo, useState } from 'react';
 import { UsersTableRow } from '../users-table-row';
-import { SORTING_DIRECTION, SortingParams, UsersTableProps } from './types';
+import {
+    FilterParams,
+    SORTING_DIRECTION,
+    SortingParams,
+    UsersTableProps,
+} from './types';
 import { UsersTableHeadCell } from '../users-table-head-cell';
+import {
+    ListOfModifiedUsers,
+    ModifiedUserKeys,
+    ModifiedUser,
+} from '../../services/reducers/users/types';
 
 export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
     const [sortingParams, setSortingParams] = useState<SortingParams>({
@@ -9,9 +19,13 @@ export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
         key: undefined,
     });
 
-    function applySorting(key: string): void {
-        console.log('applySorting', key);
+    const [filterParams, setFilterParams] = useState<FilterParams>({
+        name: '',
+        email: '',
+        phone: '',
+    });
 
+    function applySorting(key: string): void {
         let direction: SORTING_DIRECTION = SORTING_DIRECTION.ASC;
 
         if (
@@ -20,7 +34,6 @@ export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
         ) {
             direction = SORTING_DIRECTION.DESC;
         }
-        console.log(key, direction);
 
         setSortingParams({
             key: key,
@@ -29,19 +42,19 @@ export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
     }
 
     const sortedUsers = useMemo(() => {
-        let data: Array<User> = [...usersList];
+        const data: ListOfModifiedUsers = [...usersList];
+        const sortingKey: ModifiedUserKeys =
+            sortingParams.key as ModifiedUserKeys;
 
-        if (sortingParams.key) {
+        if (sortingKey) {
             data.sort((first, second) => {
-                // console.log("first, second", first, second);
-
-                if (first[sortingParams.key] < second[sortingParams.key]) {
+                if (first[sortingKey] < second[sortingKey]) {
                     return sortingParams.direction === SORTING_DIRECTION.ASC
                         ? -1
                         : 1;
                 }
 
-                if (first[sortingParams.key] > second[sortingParams.key]) {
+                if (first[sortingKey] > second[sortingKey]) {
                     return sortingParams.direction === SORTING_DIRECTION.ASC
                         ? 1
                         : -1;
@@ -53,6 +66,36 @@ export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
 
         return data;
     }, [usersList, sortingParams]);
+
+    const filteredUsers = useMemo(() => {
+        return sortedUsers.filter((user: ModifiedUser) => {
+            if (
+                user.name
+                    .toLocaleLowerCase()
+                    .includes(filterParams.name.toLocaleLowerCase()) &&
+                user.email
+                    .toLocaleLowerCase()
+                    .includes(filterParams.email.toLocaleLowerCase()) &&
+                user.phone
+                    .toLocaleLowerCase()
+                    .includes(filterParams.phone.toLocaleLowerCase())
+            ) {
+                return true;
+            }
+        });
+    }, [filterParams, sortedUsers]);
+
+    function handleInputValueChange(
+        event: BaseSyntheticEvent,
+        targetLabel: string
+    ) {
+        console.log(event.target.value, targetLabel);
+
+        setFilterParams({
+            ...filterParams,
+            [targetLabel]: event.target.value,
+        });
+    }
 
     return (
         <>
@@ -69,16 +112,16 @@ export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
                             label="name"
                             onSorting={() => applySorting('name')}
                             sortingParams={sortingParams}
-                            onInputChange={console.log}
+                            onInputChange={handleInputValueChange}
                         ></UsersTableHeadCell>
                         <UsersTableHeadCell label="username"></UsersTableHeadCell>
                         <UsersTableHeadCell
                             label="email"
-                            onInputChange={console.log}
+                            onInputChange={handleInputValueChange}
                         ></UsersTableHeadCell>
                         <UsersTableHeadCell
                             label="phone"
-                            onInputChange={console.log}
+                            onInputChange={handleInputValueChange}
                         ></UsersTableHeadCell>
                         <UsersTableHeadCell
                             label="zipcode"
@@ -88,7 +131,7 @@ export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {sortedUsers.map((user, index) => {
+                    {filteredUsers.map((user, index) => {
                         return (
                             <UsersTableRow
                                 key={index}
