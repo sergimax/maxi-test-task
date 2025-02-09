@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { UsersTableRow } from '../users-table-row';
 import { SORTING_DIRECTION, SortingParams, UsersTableProps } from './types';
-import styles from './style.module.scss';
+import { UsersTableHeadCell } from '../users-table-head-cell';
 
 export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
     const [sortingParams, setSortingParams] = useState<SortingParams>({
@@ -59,15 +59,32 @@ export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
             <table>
                 {caption && <caption>{caption}</caption>}
                 <thead>
-                    <tr className={styles.row}>
-                        <th onClick={() => applySorting('id')}>id</th>
-                        <th onClick={() => applySorting('name')}>name</th>
-                        <th onClick={() => applySorting('username')}>
-                            username
-                        </th>
-                        <th onClick={() => applySorting('email')}>email</th>
-                        <th onClick={() => applySorting('phone')}>phone</th>
-                        <th onClick={() => applySorting('zipcode')}>zipcode</th>
+                    <tr>
+                        <UsersTableHeadCell
+                            label="id"
+                            onSorting={() => applySorting('id')}
+                            sortingParams={sortingParams}
+                        ></UsersTableHeadCell>
+                        <UsersTableHeadCell
+                            label="name"
+                            onSorting={() => applySorting('name')}
+                            sortingParams={sortingParams}
+                            onInputChange={console.log}
+                        ></UsersTableHeadCell>
+                        <UsersTableHeadCell label="username"></UsersTableHeadCell>
+                        <UsersTableHeadCell
+                            label="email"
+                            onInputChange={console.log}
+                        ></UsersTableHeadCell>
+                        <UsersTableHeadCell
+                            label="phone"
+                            onInputChange={console.log}
+                        ></UsersTableHeadCell>
+                        <UsersTableHeadCell
+                            label="zipcode"
+                            onSorting={() => applySorting('zipcode')}
+                            sortingParams={sortingParams}
+                        ></UsersTableHeadCell>
                     </tr>
                 </thead>
                 <tbody>

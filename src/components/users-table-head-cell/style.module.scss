@@ -1,0 +1,13 @@
+th {
+    color: blue;
+
+    .head-cell {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.sortable {
+    cursor: pointer;
+    color: red;
+}
