@@ -3,14 +3,8 @@ import { FormData, NewUserFormProps } from "./types.ts";
 import { ModifiedUser } from "../../services/reducers/users/types.ts";
 
 export const NewUserForm = ({ onSubmit, onClose }: NewUserFormProps) => {
-  // name, - обязательное
-  // username, - обязательное
-  // email, - обязательное + проверка корректности введенной почты
-  // phone - обязательное (маска формата +7 999 999-99-99)
-  // zipcode - не обязательное
-
   const {
-    control, handleSubmit, formState: { errors }, reset, register
+    control, handleSubmit, formState: { errors }, reset
   } = useForm<FormData>({
     defaultValues: {
       name: "", username: "", email: "", phone: "", zipcode: "",
@@ -31,7 +25,7 @@ export const NewUserForm = ({ onSubmit, onClose }: NewUserFormProps) => {
     <form onSubmit={handleSubmit((data) => {
       console.log(">>onSubmit", data)
       const newUserData: ModifiedUser = {
-        // TODO use uuid ?
+        // TODO use uuid or check for existing user?
         id: Math.floor(Math.random() * 1000 + 10),
         name: data.name,
         username: data.username,
@@ -41,7 +35,7 @@ export const NewUserForm = ({ onSubmit, onClose }: NewUserFormProps) => {
       };
 
       onSubmit(newUserData);
-      // onClose();
+      onClose();
     })}>
       <div>
         <label>Name:</label>
@@ -123,4 +117,3 @@ export const NewUserForm = ({ onSubmit, onClose }: NewUserFormProps) => {
     </form>
   </>)
 }
-
