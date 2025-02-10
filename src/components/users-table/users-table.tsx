@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent, useMemo, useState } from 'react';
+import { BaseSyntheticEvent, JSX, useMemo, useState } from 'react';
 import { UsersTableRow } from '../users-table-row';
 import {
     FilterParams,
@@ -12,8 +12,21 @@ import {
     ModifiedUserKeys,
     ModifiedUser,
 } from '../../services/reducers/users/types';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
+import { addUser, deleteUsersById } from '../../services/reducers/users/slice';
+import { MODAL_TYPE } from '../../constants/constants';
+import { NewUserForm } from '../form-new-user';
+import { usersSelector } from "../../services/reducers/users/selectors.ts";
 
-export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
+export const UsersTable = ({
+    caption,
+    onDeleteUser,
+    onAddUser,
+    onModalClose,
+}: UsersTableProps) => {
+    const dispatch = useAppDispatch();
+    const usersList: ListOfModifiedUsers = useAppSelector(usersSelector);
+
     const [sortingParams, setSortingParams] = useState<SortingParams>({
         direction: SORTING_DIRECTION.ASC,
         key: undefined,
@@ -25,7 +38,9 @@ export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
         phone: '',
     });
 
-    const [selectedUsers, setSelectedUsers] = useState<Set<number>>(new Set());
+    const [selectedUsers, setSelectedUsers] = useState<Set<number> | null>(
+        null
+    );
 
     function applySorting(key: string): void {
         let direction: SORTING_DIRECTION = SORTING_DIRECTION.ASC;
@@ -108,8 +123,45 @@ export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
         setSelectedUsers(newSelectedUsers);
     }
 
+  function handleDeleteUsers(usersIds: Set<number>): void {
+    const dataForModal: {
+      onAccept: () => void; type: MODAL_TYPE; content: JSX.Element
+    } = {
+      type: MODAL_TYPE.DELETE_USER, content: (<h1>Delete selected users?</h1>), onAccept: () => {
+        dispatch(deleteUsersById({ value: Array.from(usersIds.values()) }));
+        setSelectedUsers(null);
+      }
+    };
+
+    onDeleteUser(dataForModal);
+  }
+
+  function handleAddUser() {
+    const dataForModal: {
+      type: MODAL_TYPE; content: JSX.Element
+    } = {
+      type: MODAL_TYPE.CREATE_USER, content: <NewUserForm onClose={onModalClose} onSubmit={(data: ModifiedUser) => {
+        dispatch(addUser({ value: data }))
+      }}></NewUserForm>
+    }
+
+    onAddUser(dataForModal);
+  }
+
     return (
         <>
+            <div>
+                <button onClick={handleAddUser}>Add user</button>
+            </div>
+            {selectedUsers && selectedUsers.size > 0 && (
+                <div>
+                    Selected users IDs: {[...selectedUsers].join(', ')}
+                    <br />
+                    <button onClick={() => handleDeleteUsers(selectedUsers)}>
+                        Delete selected users
+                    </button>
+                </div>
+            )}
             <table>
                 {caption && <caption>{caption}</caption>}
                 <thead>
@@ -142,10 +194,10 @@ export const UsersTable = ({ usersList, caption }: UsersTableProps) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredUsers.map((user, index) => {
+                    {filteredUsers.map((user: ModifiedUser) => {
                         return (
                             <UsersTableRow
-                                key={index}
+                                key={user.id}
                                 data={user}
                                 onRowSelect={handleRowSelection}
                             />

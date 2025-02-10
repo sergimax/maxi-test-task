@@ -24,7 +24,7 @@ export const UsersTableRow = ({ data, onRowSelect }: UsersTableRowProps) => {
                 <td>{data.username}</td>
                 <td>{data.email}</td>
                 <td>{data.phone}</td>
-                <td>{data.address.zipcode}</td>
+                <td>{data.address?.zipcode || data.zipcode || ""}</td>
             </tr>
         </>
     );
