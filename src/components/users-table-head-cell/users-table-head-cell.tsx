@@ -13,8 +13,8 @@ export const UsersTableHeadCell = ({
     const sortingTrend =
         sortingParams?.key === label
             ? sortingParams.direction === SORTING_DIRECTION.ASC
-                ? '▲'
-                : '▼'
+                ? ' ▲'
+                : ' ▼'
             : '';
 
     return (
