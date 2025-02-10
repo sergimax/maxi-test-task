@@ -24,6 +24,13 @@ const usersSlice = createSlice({
 
             state.users = newUsersList;
         },
+        addUser: (state, action) => {
+            const { value } = action.payload;
+
+            const newUsersList: ListOfModifiedUsers = [...state.users, value];
+
+            state.users = newUsersList;
+        },
     },
     extraReducers(builder) {
         builder
@@ -51,6 +58,6 @@ const usersSlice = createSlice({
     },
 });
 
-export const { resetUsersState, deleteUsersById } = usersSlice.actions;
+export const { resetUsersState, deleteUsersById, addUser } = usersSlice.actions;
 
 export const usersReducer = usersSlice.reducer;
