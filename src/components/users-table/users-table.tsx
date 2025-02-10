@@ -16,6 +16,7 @@ import {
   Button, Checkbox, FormControlLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 } from "@mui/material";
 import styles from './style.module.scss';
+import { UserAvatar } from "../user-avatar";
 
 export const UsersTable = ({
   caption, onDeleteUser, onAddUser, onModalClose,
@@ -179,7 +180,9 @@ export const UsersTable = ({
                 />} label={user.id} />
               </TableCell>
               <TableCell component="th" scope="row">
-                {user.name}
+                <div className={styles["name-cell"]}>
+                  <UserAvatar name={user.name} /> {user.name}
+                </div>
               </TableCell>
               <TableCell align="left">{user.username}</TableCell>
               <TableCell align="left">{user.email}</TableCell>
