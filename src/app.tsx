@@ -47,10 +47,10 @@ function App() {
         <>
             {isLoaded && (
                 <UsersTable
-                    usersList={users}
                     caption="Users list"
                     onDeleteUser={openModal}
                     onAddUser={openModal}
+                    onModalClose={closeModal}
                 ></UsersTable>
             )}
             {isModalShown && modalData && (

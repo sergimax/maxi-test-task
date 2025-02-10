@@ -1,14 +1,9 @@
 import { JSX } from 'react';
 import { MODAL_TYPE } from '../constants/constants';
 
-export type ModalContent = {
+export type DataForModal = {
     title?: string;
     content: JSX.Element;
-};
-
-export type ModalType = keyof typeof MODAL_TYPE;
-
-export type DataForModal = ModalContent & {
-    type: ModalType;
-    onAccept: () => void;
+    type: MODAL_TYPE.CREATE_USER | MODAL_TYPE.DELETE_USER;
+    onAccept?: () => void;
 };

@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent, useMemo, useState } from 'react';
+import { BaseSyntheticEvent, JSX, useMemo, useState } from 'react';
 import { UsersTableRow } from '../users-table-row';
 import {
     FilterParams,
@@ -12,18 +12,20 @@ import {
     ModifiedUserKeys,
     ModifiedUser,
 } from '../../services/reducers/users/types';
-import { useAppDispatch } from '../../services/hooks';
-import { deleteUsersById } from '../../services/reducers/users/slice';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
+import { addUser, deleteUsersById } from '../../services/reducers/users/slice';
 import { MODAL_TYPE } from '../../constants/constants';
 import { NewUserForm } from '../form-new-user';
+import { usersSelector } from "../../services/reducers/users/selectors.ts";
 
 export const UsersTable = ({
-    usersList,
     caption,
     onDeleteUser,
     onAddUser,
+    onModalClose,
 }: UsersTableProps) => {
     const dispatch = useAppDispatch();
+    const usersList: ListOfModifiedUsers = useAppSelector(usersSelector);
 
     const [sortingParams, setSortingParams] = useState<SortingParams>({
         direction: SORTING_DIRECTION.ASC,
@@ -121,32 +123,30 @@ export const UsersTable = ({
         setSelectedUsers(newSelectedUsers);
     }
 
-    function handleDeleteUsers(usersIds: Set<number>): void {
-        onDeleteUser({
-            type: MODAL_TYPE.DELETE_USER,
-            onAccept() {
-                dispatch(
-                    deleteUsersById({ value: Array.from(usersIds.values()) })
-                );
-                setSelectedUsers(null);
-            },
-            content: (
-                <>
-                    <h1>Delete selected users?</h1>
-                </>
-            ),
-        });
+  function handleDeleteUsers(usersIds: Set<number>): void {
+    const dataForModal: {
+      onAccept: () => void; type: MODAL_TYPE; content: JSX.Element
+    } = {
+      type: MODAL_TYPE.DELETE_USER, content: (<h1>Delete selected users?</h1>), onAccept: () => {
+        dispatch(deleteUsersById({ value: Array.from(usersIds.values()) }));
+        setSelectedUsers(null);
+      }
+    };
+
+    onDeleteUser(dataForModal);
+  }
+
+  function handleAddUser() {
+    const dataForModal: {
+      type: MODAL_TYPE; content: JSX.Element
+    } = {
+      type: MODAL_TYPE.CREATE_USER, content: <NewUserForm onClose={onModalClose} onSubmit={(data: ModifiedUser) => {
+        dispatch(addUser({ value: data }))
+      }}></NewUserForm>
     }
 
-    function handleAddUser() {
-        onAddUser({
-            type: MODAL_TYPE.CREATE_USER,
-            onAccept() {
-                console.log("onAccept");
-            },
-            content: <NewUserForm></NewUserForm>
-        })
-    }
+    onAddUser(dataForModal);
+  }
 
     return (
         <>

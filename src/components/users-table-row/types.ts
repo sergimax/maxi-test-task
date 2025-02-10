@@ -1,7 +1,7 @@
 import { BaseSyntheticEvent } from 'react';
-import { User } from '../../services/reducers/users/types';
+import { ModifiedUser } from '../../services/reducers/users/types';
 
 export type UsersTableRowProps = {
-    data: User;
+    data: ModifiedUser;
     onRowSelect: (event: BaseSyntheticEvent) => void;
 };
