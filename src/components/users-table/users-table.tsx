@@ -1,5 +1,4 @@
 import { BaseSyntheticEvent, JSX, useMemo, useState } from 'react';
-import { UsersTableRow } from '../users-table-row';
 import {
   FilterParams, SORTING_DIRECTION, SortingParams, UsersTableProps,
 } from './types';
@@ -13,7 +12,17 @@ import { MODAL_TYPE } from '../../constants/constants';
 import { NewUserForm } from '../form-new-user';
 import { usersSelector } from "../../services/reducers/users/selectors.ts";
 import { DeleteUserForm } from "../delete-user-form";
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import {
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow
+} from "@mui/material";
+import styles from './style.module.scss';
 
 export const UsersTable = ({
   caption, onDeleteUser, onAddUser, onModalClose,
@@ -121,18 +130,18 @@ export const UsersTable = ({
   }
 
   return (<>
-      <div>
-        <button onClick={handleAddUser}>Add user</button>
+    <div className={styles.controls}>
+      <Button variant="contained" onClick={handleAddUser}>Add user</Button>
+      <div className={styles.deletion}>
+        {selectedUsers && selectedUsers.size > 0 ? (<>
+          <Button variant="contained" onClick={() => handleDeleteUsers(selectedUsers)}>
+            Delete users with ids: {[...selectedUsers].join(', ')}
+          </Button>
+        </>) : <>Select user for deletion</>}
       </div>
-      {selectedUsers && selectedUsers.size > 0 && (<div>
-          Selected users IDs: {[...selectedUsers].join(', ')}
-          <br />
-          <button onClick={() => handleDeleteUsers(selectedUsers)}>
-            Delete selected users
-          </button>
-        </div>)}
-      <TableContainer component={Paper}>
+    </div>
 
+      <TableContainer component={Paper}>
         <Table>
           {caption && <caption>{caption}</caption>}
           <TableHead>
@@ -175,7 +184,7 @@ export const UsersTable = ({
                     name="UsersTableRow"
                     value={user.id}
                     onChange={(event: BaseSyntheticEvent) => handleRowSelection(event)}
-                  ></input>
+                  />
                   {user.id}
                 </TableCell>
                 <TableCell component="th" scope="row">
