@@ -5,6 +5,7 @@ export type UsersTableProps = {
     usersList: ListOfModifiedUsers;
     caption?: string;
     onDeleteUser: (data: DataForModal) => void;
+    onAddUser: (data: DataForModal) => void;
 };
 
 export enum SORTING_DIRECTION {

@@ -32,9 +32,11 @@ function App() {
             setIsModalShown(true);
         }
 
-        // if (data.type === MODAL_TYPE.CREATE_USER) {
-        //     console.log("MODAL_TYPE.CREATE_USER");
-        // }
+        if (data.type === MODAL_TYPE.CREATE_USER) {
+            console.log("MODAL_TYPE.CREATE_USER");
+            setModalData(data);
+            setIsModalShown(true);
+        }
     };
 
     useEffect(() => {
@@ -48,6 +50,7 @@ function App() {
                     usersList={users}
                     caption="Users list"
                     onDeleteUser={openModal}
+                    onAddUser={openModal}
                 ></UsersTable>
             )}
             {isModalShown && modalData && (

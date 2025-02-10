@@ -15,11 +15,13 @@ import {
 import { useAppDispatch } from '../../services/hooks';
 import { deleteUsersById } from '../../services/reducers/users/slice';
 import { MODAL_TYPE } from '../../constants/constants';
+import { NewUserForm } from '../form-new-user';
 
 export const UsersTable = ({
     usersList,
     caption,
     onDeleteUser,
+    onAddUser,
 }: UsersTableProps) => {
     const dispatch = useAppDispatch();
 
@@ -136,8 +138,21 @@ export const UsersTable = ({
         });
     }
 
+    function handleAddUser() {
+        onAddUser({
+            type: MODAL_TYPE.CREATE_USER,
+            onAccept() {
+                console.log("onAccept");
+            },
+            content: <NewUserForm></NewUserForm>
+        })
+    }
+
     return (
         <>
+            <div>
+                <button onClick={handleAddUser}>Add user</button>
+            </div>
             {selectedUsers && selectedUsers.size > 0 && (
                 <div>
                     Selected users IDs: {[...selectedUsers].join(', ')}
