@@ -1,6 +1,4 @@
 th {
-    color: blue;
-
     .head-cell {
         display: flex;
         flex-direction: column;
@@ -9,5 +7,4 @@ th {
 
 .sortable {
     cursor: pointer;
-    color: red;
 }
