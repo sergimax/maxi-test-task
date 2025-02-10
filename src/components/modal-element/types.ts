@@ -1,6 +1,6 @@
 import { JSX } from 'react';
 
-export type ModalProps = {
+export type ModalElementProps = {
     title?: string;
     children: JSX.Element;
     onClose: (message?: string) => void;

@@ -6,7 +6,7 @@ import {
     usersIsLoadedSelector
 } from './services/reducers/users/selectors';
 import { UsersTable } from './components/users-table';
-import { Modal } from './components/modal';
+import { ModalElement } from './components/modal-element';
 import { DataForModal } from './types/types';
 import { MODAL_TYPE } from './constants/constants';
 import Snackbar from '@mui/material/Snackbar';
@@ -58,7 +58,7 @@ function App() {
                 ></UsersTable>
             )}
             {isModalShown && modalData && (
-                <Modal
+                <ModalElement
                     title={modalData.title}
                     children={modalData.content}
                     onAccept={modalData.onAccept}

@@ -1,10 +1,10 @@
 import { createPortal } from 'react-dom';
 import { ModalOverlay } from '../modal-overlay';
 import { useEffect } from 'react';
-import { ModalProps } from './types';
+import { ModalElementProps } from './types';
 import styles from './style.module.scss';
 
-export const Modal = ({ onClose, children }: ModalProps) => {
+export const ModalElement = ({ onClose, children }: ModalElementProps) => {
     const modalClasses: string = `${styles.container}`;
 
     function handleEscapeKeyPress(event: KeyboardEvent): void {
