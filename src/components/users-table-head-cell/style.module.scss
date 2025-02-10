@@ -1,15 +1,15 @@
 th {
-    .head-cell {
-        display: flex;
-        flex-direction: column;
-        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  .head-cell {
+    display: flex;
+    flex-direction: column;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 
-        &__label {
-            margin-bottom: 4px;
-        }
+    &__label {
+      margin-bottom: 4px;
     }
+  }
 }
 
 .sortable {
-    cursor: pointer;
+  cursor: pointer;
 }

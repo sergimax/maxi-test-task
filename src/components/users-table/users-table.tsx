@@ -134,61 +134,61 @@ export const UsersTable = ({
       </div>
     </div>
 
-      <TableContainer component={Paper}>
-        <Table>
-          {caption && <caption>{caption}</caption>}
-          <TableHead>
-            <TableRow>
-              <UsersTableHeadCell
-                label="id"
-                onSorting={() => applySorting('id')}
-                sortingParams={sortingParams}
-              ></UsersTableHeadCell>
-              <UsersTableHeadCell
-                label="name"
-                onSorting={() => applySorting('name')}
-                sortingParams={sortingParams}
-                onInputChange={handleInputValueChange}
-              ></UsersTableHeadCell>
-              <UsersTableHeadCell label="username"></UsersTableHeadCell>
-              <UsersTableHeadCell
-                label="email"
-                onInputChange={handleInputValueChange}
-              ></UsersTableHeadCell>
-              <UsersTableHeadCell
-                label="phone"
-                onInputChange={handleInputValueChange}
-              ></UsersTableHeadCell>
-              <UsersTableHeadCell
-                label="zipcode"
-                onSorting={() => applySorting('zipcode')}
-                sortingParams={sortingParams}
-              ></UsersTableHeadCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredUsers.map((user: ModifiedUser) => {
-              return (<TableRow
-                key={user.id}
-              >
-                <TableCell component="th" scope="row">
-                  <FormControlLabel control={<Checkbox type="checkbox"
-                                                       name="UsersTableRow"
-                                                       value={user.id}
-                                                       onChange={(event: BaseSyntheticEvent) => handleRowSelection(event)}
-                  />} label={user.id} />
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  {user.name}
-                </TableCell>
-                <TableCell align="left">{user.username}</TableCell>
-                <TableCell align="left">{user.email}</TableCell>
-                <TableCell align="left">{user.phone}</TableCell>
-                <TableCell align="left">{user.address?.zipcode || user.zipcode || ""}</TableCell>
-              </TableRow>);
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </>);
+    <TableContainer component={Paper}>
+      <Table>
+        {caption && <caption>{caption}</caption>}
+        <TableHead>
+          <TableRow>
+            <UsersTableHeadCell
+              label="id"
+              onSorting={() => applySorting('id')}
+              sortingParams={sortingParams}
+            ></UsersTableHeadCell>
+            <UsersTableHeadCell
+              label="name"
+              onSorting={() => applySorting('name')}
+              sortingParams={sortingParams}
+              onInputChange={handleInputValueChange}
+            ></UsersTableHeadCell>
+            <UsersTableHeadCell label="username"></UsersTableHeadCell>
+            <UsersTableHeadCell
+              label="email"
+              onInputChange={handleInputValueChange}
+            ></UsersTableHeadCell>
+            <UsersTableHeadCell
+              label="phone"
+              onInputChange={handleInputValueChange}
+            ></UsersTableHeadCell>
+            <UsersTableHeadCell
+              label="zipcode"
+              onSorting={() => applySorting('zipcode')}
+              sortingParams={sortingParams}
+            ></UsersTableHeadCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {filteredUsers.map((user: ModifiedUser) => {
+            return (<TableRow
+              key={user.id}
+            >
+              <TableCell component="th" scope="row">
+                <FormControlLabel control={<Checkbox type="checkbox"
+                                                     name="UsersTableRow"
+                                                     value={user.id}
+                                                     onChange={(event: BaseSyntheticEvent) => handleRowSelection(event)}
+                />} label={user.id} />
+              </TableCell>
+              <TableCell component="th" scope="row">
+                {user.name}
+              </TableCell>
+              <TableCell align="left">{user.username}</TableCell>
+              <TableCell align="left">{user.email}</TableCell>
+              <TableCell align="left">{user.phone}</TableCell>
+              <TableCell align="left">{user.address?.zipcode || user.zipcode || ""}</TableCell>
+            </TableRow>);
+          })}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  </>);
 };
