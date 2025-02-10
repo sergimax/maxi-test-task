@@ -8,11 +8,7 @@ export const fetchUsers = createAsyncThunk<
     FetchUsersAsyncThunkConfig
 >(`${USERS_STATE_NAME}/fetch`, async (_, { rejectWithValue }) => {
     try {
-        const usersResponse = await fetch(`${API_URL}/${API_ENDPOINT.USERS}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+        const usersResponse = await fetch(`${API_URL}/${API_ENDPOINT.USERS}`);
 
         if (!usersResponse.ok) {
             throw new Error('Users fetch failed');
