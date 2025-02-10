@@ -1,6 +1,7 @@
 import { SORTING_DIRECTION } from '../users-table/types';
 import styles from './style.module.scss';
 import { UsersTableHeadCellProps } from './types';
+import { TextField } from "@mui/material";
 
 export const UsersTableHeadCell = ({
     label,
@@ -20,14 +21,14 @@ export const UsersTableHeadCell = ({
     return (
         <th className={classNames}>
             <div className={styles['head-cell']}>
-                <span onClick={onSorting}>
+                <div onClick={() => onSorting && onSorting()} className={styles['head-cell__label']} >
                     {label}
                     {sortingTrend && <span>{sortingTrend}</span>}
-                </span>
+                </div>
                 {onInputChange && (
-                    <input
-                        onChange={(event) => onInputChange(event, label)}
-                    ></input>
+                    <TextField size={"small"}
+                        onChange={(event) => onInputChange && onInputChange(event, label)}
+                    ></TextField>
                 )}
             </div>
         </th>

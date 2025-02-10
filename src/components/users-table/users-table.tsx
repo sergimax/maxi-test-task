@@ -13,14 +13,7 @@ import { NewUserForm } from '../form-new-user';
 import { usersSelector } from "../../services/reducers/users/selectors.ts";
 import { DeleteUserForm } from "../delete-user-form";
 import {
-  Button,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow
+  Button, Checkbox, FormControlLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 } from "@mui/material";
 import styles from './style.module.scss';
 
@@ -179,13 +172,11 @@ export const UsersTable = ({
                 key={user.id}
               >
                 <TableCell component="th" scope="row">
-                  <input
-                    type="checkbox"
-                    name="UsersTableRow"
-                    value={user.id}
-                    onChange={(event: BaseSyntheticEvent) => handleRowSelection(event)}
-                  />
-                  {user.id}
+                  <FormControlLabel control={<Checkbox type="checkbox"
+                                                       name="UsersTableRow"
+                                                       value={user.id}
+                                                       onChange={(event: BaseSyntheticEvent) => handleRowSelection(event)}
+                  />} label={user.id} />
                 </TableCell>
                 <TableCell component="th" scope="row">
                   {user.name}

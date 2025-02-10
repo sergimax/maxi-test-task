@@ -2,6 +2,11 @@ th {
     .head-cell {
         display: flex;
         flex-direction: column;
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+
+        &__label {
+            margin-bottom: 4px;
+        }
     }
 }
 
