@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { ModalProps } from './types';
 import styles from './style.module.scss';
 
-export const Modal = ({ onClose, children, onAccept }: ModalProps) => {
+export const Modal = ({ onClose, children }: ModalProps) => {
     const modalClasses: string = `${styles.container}`;
 
     function handleEscapeKeyPress(event: KeyboardEvent): void {
@@ -28,17 +28,7 @@ export const Modal = ({ onClose, children, onAccept }: ModalProps) => {
     return createPortal(
         <>
             <div className={modalClasses}>
-                <div>{children}</div>
-                {onAccept && (
-                    <button
-                        onClick={() => {
-                            onAccept();
-                            onClose();
-                        }}
-                    >
-                        Yes
-                    </button>
-                )}
+                {children}
             </div>
             <ModalOverlay onClose={onClose} />
         </>,

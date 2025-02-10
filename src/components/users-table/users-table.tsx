@@ -17,6 +17,7 @@ import { addUser, deleteUsersById } from '../../services/reducers/users/slice';
 import { MODAL_TYPE } from '../../constants/constants';
 import { NewUserForm } from '../form-new-user';
 import { usersSelector } from "../../services/reducers/users/selectors.ts";
+import { DeleteUserForm } from "../delete-user-form";
 
 export const UsersTable = ({
     caption,
@@ -125,12 +126,12 @@ export const UsersTable = ({
 
   function handleDeleteUsers(usersIds: Set<number>): void {
     const dataForModal: {
-      onAccept: () => void; type: MODAL_TYPE; content: JSX.Element
+      type: MODAL_TYPE; content: JSX.Element
     } = {
-      type: MODAL_TYPE.DELETE_USER, content: (<h1>Delete selected users?</h1>), onAccept: () => {
+      type: MODAL_TYPE.DELETE_USER, content: (<DeleteUserForm onClose={onModalClose} onDelete={() => {
         dispatch(deleteUsersById({ value: Array.from(usersIds.values()) }));
         setSelectedUsers(null);
-      }
+      }} />)
     };
 
     onDeleteUser(dataForModal);

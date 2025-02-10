@@ -9,6 +9,7 @@ import { UsersTable } from './components/users-table';
 import { Modal } from './components/modal';
 import { DataForModal } from './types/types';
 import { MODAL_TYPE } from './constants/constants';
+import Snackbar from '@mui/material/Snackbar';
 
 function App() {
     const dispatch = useAppDispatch();
@@ -17,8 +18,15 @@ function App() {
     const [isModalShown, setIsModalShown] = useState<boolean>(false);
     const [modalData, setModalData] = useState<DataForModal | null>(null);
 
-    const closeModal = () => {
+    const [isSnackbarShown, setIsSnackbarShown] = useState<boolean>(false);
+    const [snackbarMessage, setSnackbarMessage] = useState<string>("null");
+
+    const closeModal = (message?: string) => {
         setIsModalShown(false);
+        if (message?.length) {
+            setSnackbarMessage(message)
+            setIsSnackbarShown(true);
+        }
     };
 
     const openModal = (data: DataForModal): void => {
@@ -57,6 +65,14 @@ function App() {
                     onClose={closeModal}
                 />
             )}
+
+            <Snackbar
+              anchorOrigin={{ vertical: "top", horizontal: "center" }}
+              open={isSnackbarShown}
+              autoHideDuration={2000}
+              onClose={() => setIsSnackbarShown(false)}
+              message={snackbarMessage}
+            />
         </>
     );
 }
