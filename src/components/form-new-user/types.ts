@@ -5,5 +5,5 @@ export type FormData = {
 }
 
 export type NewUserFormProps = {
-  onClose: () => void; onSubmit: (data: ModifiedUser) => void;
+  onClose: (message?: string) => void; onSubmit: (data: ModifiedUser) => void;
 }

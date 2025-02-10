@@ -35,7 +35,7 @@ export const NewUserForm = ({ onSubmit, onClose }: NewUserFormProps) => {
       };
 
       onSubmit(newUserData);
-      onClose();
+      onClose("New user added");
     })}>
       <div>
         <label>Name:</label>
@@ -44,7 +44,6 @@ export const NewUserForm = ({ onSubmit, onClose }: NewUserFormProps) => {
           control={control}
           rules={{ required: 'Name is required' }}
           render={({ field }) => <input {...field} />}
-
         />
         {errors.name && <span>{errors.name.message}</span>}
       </div>
