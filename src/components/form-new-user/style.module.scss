@@ -1,0 +1,25 @@
+.new-user-form-container {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  color: white;
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 4px;
+
+      label {
+        margin-bottom: 4px;
+      }
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      margin-top: 16px;
+    }
+  }
+}

@@ -1,3 +1,15 @@
 .row:hover {
-    cursor: pointer;
+  cursor: pointer;
+}
+
+.controls {
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+
+  .deletion {
+    margin-left: 8px;
+  }
 }

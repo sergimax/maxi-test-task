@@ -1,13 +1,15 @@
 th {
-    color: blue;
+  .head-cell {
+    display: flex;
+    flex-direction: column;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 
-    .head-cell {
-        display: flex;
-        flex-direction: column;
+    &__label {
+      margin-bottom: 4px;
     }
+  }
 }
 
 .sortable {
-    cursor: pointer;
-    color: red;
+  cursor: pointer;
 }

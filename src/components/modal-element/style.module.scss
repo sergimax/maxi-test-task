@@ -1,0 +1,14 @@
+.container {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  background-color: rgba(28, 28, 33, 0.9);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+
+  padding: 16px;
+}
