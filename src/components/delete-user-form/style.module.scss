@@ -1,0 +1,11 @@
+.delete-user-form-container {
+  display: flex;
+  flex-direction: column;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  color: white;
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+  }
+}

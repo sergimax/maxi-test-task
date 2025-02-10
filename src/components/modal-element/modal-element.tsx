@@ -25,13 +25,10 @@ export const ModalElement = ({ onClose, children }: ModalElementProps) => {
         };
     }, []);
 
-    return createPortal(
-        <>
-            <div className={modalClasses}>
-                {children}
-            </div>
-            <ModalOverlay onClose={onClose} />
-        </>,
-        document.body
-    );
+  return createPortal(<>
+    <div className={modalClasses}>
+      {children}
+    </div>
+    <ModalOverlay onClose={onClose} />
+  </>, document.body);
 };

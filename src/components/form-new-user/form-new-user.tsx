@@ -1,6 +1,8 @@
 import { Controller, useForm } from "react-hook-form";
 import { FormData, NewUserFormProps } from "./types.ts";
 import { ModifiedUser } from "../../services/reducers/users/types.ts";
+import { Button, ButtonGroup } from "@mui/material";
+import styles from "./style.module.scss";
 
 export const NewUserForm = ({ onSubmit, onClose }: NewUserFormProps) => {
   const {
@@ -21,9 +23,9 @@ export const NewUserForm = ({ onSubmit, onClose }: NewUserFormProps) => {
     return value;
   };
 
-  return (<>
+  return (<div className={styles["new-user-form-container"]}>
+    <h2>Create user</h2>
     <form onSubmit={handleSubmit((data) => {
-      console.log(">>onSubmit", data)
       const newUserData: ModifiedUser = {
         // TODO use uuid or check for existing user?
         id: Math.floor(Math.random() * 1000 + 10),
@@ -37,7 +39,7 @@ export const NewUserForm = ({ onSubmit, onClose }: NewUserFormProps) => {
       onSubmit(newUserData);
       onClose("New user added");
     })}>
-      <div>
+      <div className={styles.field}>
         <label>Name:</label>
         <Controller
           name="name"
@@ -48,7 +50,7 @@ export const NewUserForm = ({ onSubmit, onClose }: NewUserFormProps) => {
         {errors.name && <span>{errors.name.message}</span>}
       </div>
 
-      <div>
+      <div className={styles.field}>
         <label>Username:</label>
         <Controller
           name="username"
@@ -59,7 +61,7 @@ export const NewUserForm = ({ onSubmit, onClose }: NewUserFormProps) => {
         {errors.username && <span>{errors.username.message}</span>}
       </div>
 
-      <div>
+      <div className={styles.field}>
         <label>Email:</label>
         <Controller
           name="email"
@@ -74,7 +76,7 @@ export const NewUserForm = ({ onSubmit, onClose }: NewUserFormProps) => {
         {errors.email && <span>{errors.email.message}</span>}
       </div>
 
-      <div>
+      <div className={styles.field}>
         <label>Phone:</label>
         <Controller
           name="phone"
@@ -96,7 +98,7 @@ export const NewUserForm = ({ onSubmit, onClose }: NewUserFormProps) => {
         {errors.phone && <span>{errors.phone.message}</span>}
       </div>
 
-      <div>
+      <div className={styles.field}>
         <label>Zipcode:</label>
         <Controller
           name="zipcode"
@@ -105,14 +107,13 @@ export const NewUserForm = ({ onSubmit, onClose }: NewUserFormProps) => {
         />
       </div>
 
-      <button type="submit">Add</button>
-      <button type="button" onClick={() => {
-        reset();
-        onClose();
-      }}>
-        Cancel
-      </button>
-
+      <ButtonGroup variant="contained" className={styles["controls"]}>
+        <Button variant="contained" type="submit">Add user</Button>
+        <Button variant="contained" onClick={() => {
+          reset();
+          onClose();
+        }}>Cancel</Button>
+      </ButtonGroup>
     </form>
-  </>)
+  </div>)
 }
