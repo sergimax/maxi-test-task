@@ -5,8 +5,6 @@ export type FetchUsersAsyncThunkConfig = {
     rejectValue: string;
 };
 
-export type GetUsersDTO = Array<User>;
-
 export type User = {
     id: number;
     name: string;

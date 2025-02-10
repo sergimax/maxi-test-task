@@ -1,11 +1,9 @@
-import { JSX, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './app.css';
 import { useAppDispatch, useAppSelector } from './services/hooks';
 import { fetchUsers } from './services/reducers/users/thunks';
 import {
-    usersIsLoadedSelector,
-    // usersIsLoadingSelector,
-    usersSelector,
+    usersIsLoadedSelector
 } from './services/reducers/users/selectors';
 import { UsersTable } from './components/users-table';
 import { Modal } from './components/modal';
@@ -14,8 +12,6 @@ import { MODAL_TYPE } from './constants/constants';
 
 function App() {
     const dispatch = useAppDispatch();
-    const users = useAppSelector(usersSelector);
-    // const isLoading = useAppSelector(usersIsLoadingSelector);
     const isLoaded = useAppSelector(usersIsLoadedSelector);
 
     const [isModalShown, setIsModalShown] = useState<boolean>(false);

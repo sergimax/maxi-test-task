@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { API_ENDPOINT, API_URL, USERS_STATE_NAME } from './constants';
-import { FetchUsersAsyncThunkConfig, GetUsersDTO } from './types';
+import { FetchUsersAsyncThunkConfig, User } from './types';
 
 export const fetchUsers = createAsyncThunk<
-    GetUsersDTO,
+    Array<User>,
     void,
     FetchUsersAsyncThunkConfig
 >(`${USERS_STATE_NAME}/fetch`, async (_, { rejectWithValue }) => {
@@ -14,7 +14,7 @@ export const fetchUsers = createAsyncThunk<
             throw new Error('Users fetch failed');
         }
 
-        const usersData: GetUsersDTO = await usersResponse.json();
+        const usersData: Array<User> = await usersResponse.json();
 
         if (!usersData.length) {
             throw new Error('Empty users list');
